@@ -1,0 +1,29 @@
+{
+	"books" : {
+		"JHN" : {
+			"text" : "./SAB/gulNT Gullah/gulNT Gullah_data/books/44JHNgulDBL.SFM",
+			"timing" :  "./SAB/gulNT Gullah/gulNT Gullah_data/timings/04-JHN-[nn]-timing.txt",
+			"audio" : "./SAB/gulNT Gullah/gulNT Gullah_data/audio/44-JHNgul-[nn].mp3",
+			"num_chapters" : 21
+		}
+	},
+	"story_src" : "./input/json/story_data_short.json",
+	"image_src" : "./input/image/VB_John",
+	"audio_temp" : "./temp/audio",
+	"video_temp" : "./temp/video",
+	"page_timing_temp" : "./temp/page_timing",
+	"subs_temp" : "./temp/aeneas",
+	"video_out" : "./output/video",
+	"subs_out" : "./output/srt",
+	"video_subs_out" : "./output/video_subbed",
+	"subtitles" : true,
+	"subs_hardcoded" : true,
+	"subs_split" : 40,
+	"subs_method" : "aeneas",
+	"pixel_format" : "yuv420p",
+	"audio_codec" : "aac",
+	"video_codec" : "libx264",
+	"fps" : 24,
+	"smoothness" : 8,
+	"output_height" : 720
+}
