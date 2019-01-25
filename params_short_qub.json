@@ -19,7 +19,7 @@
 	"subtitles" : true,
 	"subs_hardcoded" : true,
 	"subs_split" : 40,
-	"subs_method" : "aeneas",
+	"subs_method" : "interpolate",
 	"pixel_format" : "yuv420p",
 	"audio_codec" : "aac",
 	"video_codec" : "libx264",

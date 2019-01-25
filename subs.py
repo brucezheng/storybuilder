@@ -36,7 +36,12 @@ book_segs = {}
 
 # "//v 1 blah blah" -> "blah blah"
 def strip_header(line):
-	return re.sub(r"\\[a-z][0-9]?( [0-9]+)? ?",'',line)
+	result = line
+	result = re.sub(r"\\f.*?\\f\*",'',result)
+	result = re.sub(r"\\e.*?\\e\*",'',result)
+	result = re.sub(r"\\x.*?\\x\*",'',result)
+	result = re.sub(r"\\[a-z][0-9]?( [0-9]+)? ?",'',result)
+	return result
 
 # load book data for a given book
 def load_book(book_data):
