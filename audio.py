@@ -9,12 +9,16 @@ import json
 import re
 from timeit import default_timer as timer
 
+from pathlib import Path
+
+from sb_util import *
+
 assert len(sys.argv) > 1	
 param_file = sys.argv[1]
 params = json.loads(open(param_file).read())
 
-output_folder = params["audio_temp"]
-story_src = params["story_src"]
+output_folder = Path(params["audio_temp"])
+story_src = Path(params["story_src"])
 
 books = params["books"]
 book_segs = {}
@@ -30,8 +34,8 @@ def load_book(book_data):
 	timing_format = convert_to_pyformat(book_data["timing"])
 	audio_format = convert_to_pyformat(book_data["audio"])
 
-	timing_src = [ timing_format.format(x) for x in chapter_range ]
-	audio_src = [ audio_format.format(x) for x in chapter_range ]
+	timing_src = [ Path(timing_format.format(x)) for x in chapter_range ]
+	audio_src = [ Path(audio_format.format(x)) for x in chapter_range ]
 	
 	timing_raw = []
 	audio = []
@@ -53,7 +57,6 @@ def load_book(book_data):
 		timings = [x.split("\t") for x in timings]
 		timings = [(int(float(x[0]) * 1000), int(float(x[1]) * 1000), x[2]) for x in timings]
 		timings = [x for x in timings if x[2][0].isdigit()]
-
 
 		timings2 = []
 
@@ -91,9 +94,6 @@ def get_seg(ref_book,ref_start,ref_end):
 		seg += segments[chapter-1][verse-1]
 	return seg
 
-def format_book_title(t):
-	return re.sub(r"[ -]",'_',t)
-
 # produce and write audio files for a story, page by page
 def segment_story(story):
 	title = format_book_title(story["title"])
@@ -101,11 +101,11 @@ def segment_story(story):
 	print("Generating {0}/{1}_##.mp3...".format(output_folder,title),end=' ', flush=True)
 	for p in story["pages"]:
 		seg = get_seg(story["ref_book"],p["ref_start"],p["ref_end"])
-		filename = "{0}/{1}_{2:02d}.mp3".format(output_folder,title,p["page"])
-		file = open(filename,"w+")
+		output_tgt = output_folder / "{0}_{1:02d}.mp3".format(title,p["page"])
+		file = open(output_tgt,"w+")
 		file.write(' ')
 		file.close()
-		seg.export(filename, format="mp3")
+		seg.export(output_tgt, format="mp3")
 	end_time = timer()
 	print("done ({0:0.2f})".format(end_time-start_time),flush=True)
 
@@ -119,6 +119,6 @@ for title in books.keys():
 story_raw = open(story_src).read()
 stories = json.loads(story_raw)
 
-for story in stories["storyCollection"]:
+for story in stories["storyCollection"][-6:-5]:
 	segment_story(story["story"])
 

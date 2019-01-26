@@ -2,6 +2,7 @@ import sys
 import os
 import subprocess
 import json
+from pathlib import Path
 from timeit import default_timer as timer
 
 if len(sys.argv) < 2:
@@ -12,12 +13,12 @@ params = json.loads(open(param_file).read())
 
 subs_on = params["subtitles"]
 
-def make_sure_exists(directory):
-	if not os.path.exists(directory):
-	    os.makedirs(directory)
+def make_sure_exists(path):
+	if not os.path.exists(path):
+	    os.makedirs(path)
 
 folder_params = [ "audio_temp", "video_temp", "page_timing_temp", "subs_temp", "video_out", "subs_out", "video_subs_out" ]
-folders = [ params[param_name] for param_name in folder_params ]
+folders = [ Path(params[param_name]) for param_name in folder_params ]
 for folder in folders:
 	make_sure_exists(folder)
 
