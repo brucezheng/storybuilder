@@ -76,6 +76,10 @@ def make_movie(story):
 		# generate params for ffmpeg
 		num_frames = int(float(len(audio))/(1000.0/float(fps)))
 		
+		size_init = transform[0][3]
+		size_change = transform[1][3] - transform[0][3]
+		size_incr = size_change / num_frames
+
 		zoom_init = 1.0/transform[0][3]
 		zoom_change = 1.0/transform[1][3] - 1.0/transform[0][3]
 		zoom_incr = zoom_change / num_frames
@@ -90,7 +94,9 @@ def make_movie(story):
 		y_change = y_end - y_init
 		y_incr = y_change / num_frames
 
-		zoom_cmd = "{0:0.10f}{1}{2:0.10f}*on".format(zoom_init - zoom_incr, sign(zoom_incr), abs(zoom_incr))
+		#old non-constant zoom
+		#zoom_cmd = "{0:0.10f}{1}{2:0.10f}*on".format(zoom_init - zoom_incr, sign(zoom_incr), abs(zoom_incr))
+		zoom_cmd = "1/({0:0.10f}{1}{2:0.10f}*on)".format(size_init - size_incr, sign(size_incr), abs(size_incr))
 		x_cmd = "{0:0.10f}*iw{1}{2:0.10f}*iw*on".format(x_init - x_incr,sign(x_incr),abs(x_incr))
 		y_cmd = "{0:0.10f}*ih{1}{2:0.10f}*ih*on".format(y_init - y_incr,sign(y_incr),abs(y_incr))
 
