@@ -106,7 +106,7 @@ def make_movie(story):
 
 		# store timing info (needed for precise sub times)
 		mp4_audio = AudioSegment.from_file(output_tgt, "mp4") 
-		
+
 		# need to manually get duration of the file, deriving from num_frames somehow gives incorrect
 		duration = len(mp4_audio)
 		page_duration.append(duration)
@@ -141,6 +141,6 @@ def make_movie(story):
 story_raw = open(story_src).read()
 stories = json.loads(story_raw)
 
-for story in stories["storyCollection"][-6:-5]:
+for story in stories["storyCollection"]:
 	story = story["story"]
 	make_movie(story)

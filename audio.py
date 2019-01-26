@@ -119,6 +119,6 @@ for title in books.keys():
 story_raw = open(story_src).read()
 stories = json.loads(story_raw)
 
-for story in stories["storyCollection"][-6:-5]:
+for story in stories["storyCollection"]:
 	segment_story(story["story"])
 
