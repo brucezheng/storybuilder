@@ -263,7 +263,7 @@ stories = json.loads(story_raw)
 for title in books.keys():
 	book_segs[title] = load_book(books[title])
 
-for story in stories["storyCollection"][:1]:
+for story in stories["storyCollection"]:
 	generate_srt(story["story"])
 	if hardcoding:
 		transcode_subtitles(story["story"])
